@@ -1,0 +1,18 @@
+<header>
+  <h1>Camera producer</h1>
+  <p>Send a photo for AI analysis and view the answer in your client.</p>
+</header>
+
+<section class="camera-preview" aria-label="Camera preview">
+  <p>Camera preview will appear here.</p>
+</section>
+
+<p class="status" role="status">Camera not started.</p>
+<p id="capture-unavailable">Camera capture is not available in this version yet.</p>
+<p class="capture-interval">Automatic capture interval: {{ captureIntervalSeconds }} seconds.</p>
+
+<div class="controls" aria-describedby="capture-unavailable">
+  <button type="button" disabled>Take photo</button>
+  <button type="button" disabled>Start automatic capture</button>
+  <button type="button" disabled>Stop</button>
+</div>
