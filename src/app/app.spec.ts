@@ -13,7 +13,7 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
     const element = fixture.nativeElement as HTMLElement;
-    expect(element.querySelector('h1')?.textContent).toBe('Camera producer');
+    expect(element.querySelector('button')?.getAttribute('aria-label')).toBe('Start camera');
     expect(element.querySelector('.capture-interval')?.textContent).toContain('45 seconds');
     expect(TestBed.inject(PRODUCER_CONFIG)).toBe(producerConfig);
   });

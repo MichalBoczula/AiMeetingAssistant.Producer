@@ -1,18 +1,38 @@
-<header>
-  <h1>Camera producer</h1>
-  <p>Send a photo for AI analysis and view the answer in your client.</p>
-</header>
+<video
+  #preview
+  class="camera-preview"
+  [hidden]="!session.active()"
+  autoplay
+  [muted]="true"
+  playsinline
+  aria-label="Live camera preview"
+></video>
 
-<section class="camera-preview" aria-label="Camera preview">
-  <p>Camera preview will appear here.</p>
-</section>
+<button
+  class="camera-toggle"
+  type="button"
+  (click)="toggleCamera()"
+  [class.active]="session.active()"
+  [attr.aria-label]="session.active() ? 'Stop camera' : 'Start camera'"
+  [attr.aria-pressed]="session.active()"
+  [disabled]="!session.active() && session.busy()"
+>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+    <path d="M3 7h4l2-3h6l2 3h4v13H3z" stroke-linejoin="round" />
+    <circle cx="12" cy="13" r="4" />
+    @if (session.active()) {
+      <path d="M3 3l18 18" stroke-width="2.5" />
+    }
+  </svg>
+</button>
 
-<p class="status" role="status">Camera not started.</p>
-<p id="capture-unavailable">Camera capture is not available in this version yet.</p>
-<p class="capture-interval">Automatic capture interval: {{ captureIntervalSeconds }} seconds.</p>
-
-<div class="controls" aria-describedby="capture-unavailable">
-  <button type="button" disabled>Take photo</button>
-  <button type="button" disabled>Start automatic capture</button>
-  <button type="button" disabled>Stop</button>
-</div>
+<p class="status" role="status">{{ session.status() }}</p>
+<p class="capture-interval">
+  Every {{ captureIntervalSeconds }} seconds · Sent: {{ session.sentCount() }}
+</p>
+@if (session.active()) {
+  <p class="hint">Keep this page open. Tap the camera to stop.</p>
+  @if (session.wakeLock.state() === 'unavailable') {
+    <p class="hint">Screen wake lock is unavailable. Keep the phone screen awake.</p>
+  }
+}
