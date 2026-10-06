@@ -14,7 +14,7 @@ describe('App', () => {
     fixture.detectChanges();
     const element = fixture.nativeElement as HTMLElement;
     expect(element.querySelector('button')?.getAttribute('aria-label')).toBe('Start camera');
-    expect(element.querySelector('.capture-interval')?.textContent).toContain('45 seconds');
+    expect(element.querySelector('.capture-interval')?.textContent).toContain('30 seconds');
     expect(TestBed.inject(PRODUCER_CONFIG)).toBe(producerConfig);
   });
 });
