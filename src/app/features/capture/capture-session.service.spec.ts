@@ -47,7 +47,7 @@ describe('CaptureSessionService', () => {
         { provide: CameraService, useValue: camera },
         { provide: PhotoUploadService, useValue: uploader },
         { provide: ScreenWakeLockService, useValue: wakeLock },
-        { provide: PRODUCER_CONFIG, useValue: { captureIntervalMs: 45_000 } },
+        { provide: PRODUCER_CONFIG, useValue: { captureIntervalMs: 30_000 } },
       ],
     });
     service = TestBed.inject(CaptureSessionService);
@@ -59,10 +59,10 @@ describe('CaptureSessionService', () => {
     vi.useRealTimers();
   });
 
-  it('sends immediately and every 45 seconds using a stable session and unique request IDs', async () => {
+  it('sends immediately and every 30 seconds using a stable session and unique request IDs', async () => {
     await service.start(video);
     expect(uploader.upload).toHaveBeenCalledOnce();
-    await vi.advanceTimersByTimeAsync(44_999);
+    await vi.advanceTimersByTimeAsync(29_999);
     expect(uploader.upload).toHaveBeenCalledOnce();
     await vi.advanceTimersByTimeAsync(1);
     expect(uploader.upload).toHaveBeenCalledTimes(2);
@@ -76,7 +76,7 @@ describe('CaptureSessionService', () => {
   it('does not open a second camera or create another timer on duplicate Start', async () => {
     await service.start(video);
     await service.start(video);
-    await vi.advanceTimersByTimeAsync(45_000);
+    await vi.advanceTimersByTimeAsync(30_000);
     expect(camera.open).toHaveBeenCalledOnce();
     expect(uploader.upload).toHaveBeenCalledTimes(2);
   });
@@ -95,7 +95,7 @@ describe('CaptureSessionService', () => {
     finish();
     await start;
     expect(uploader.upload).toHaveBeenCalledOnce();
-    await vi.advanceTimersByTimeAsync(45_000);
+    await vi.advanceTimersByTimeAsync(30_000);
     expect(uploader.upload).toHaveBeenCalledTimes(2);
   });
 
@@ -197,9 +197,9 @@ describe('CaptureSessionService', () => {
     await service.start(video);
     expect(service.status()).toContain('cooldown');
     expect(service.busy()).toBe(false);
-    await vi.advanceTimersByTimeAsync(45_000);
+    await vi.advanceTimersByTimeAsync(30_000);
     expect(uploader.upload).toHaveBeenCalledOnce();
-    await vi.advanceTimersByTimeAsync(45_000);
+    await vi.advanceTimersByTimeAsync(30_000);
     expect(uploader.upload).toHaveBeenCalledTimes(2);
     expect(camera.capture).toHaveBeenCalledTimes(2);
     expect(uploader.upload.mock.calls[1][2]).not.toBe(uploader.upload.mock.calls[0][2]);
@@ -214,7 +214,7 @@ describe('CaptureSessionService', () => {
     await service.start(video);
     await vi.advanceTimersByTimeAsync(90_000);
     expect(uploader.upload).toHaveBeenCalledOnce();
-    await vi.advanceTimersByTimeAsync(45_000);
+    await vi.advanceTimersByTimeAsync(30_000);
     expect(uploader.upload).toHaveBeenCalledTimes(2);
   });
 
@@ -234,7 +234,7 @@ describe('CaptureSessionService', () => {
     await service.start(video);
     expect(service.status()).toContain('unavailable');
     expect(service.active()).toBe(true);
-    await vi.advanceTimersByTimeAsync(45_000);
+    await vi.advanceTimersByTimeAsync(30_000);
     expect(uploader.upload).toHaveBeenCalledTimes(2);
     expect(service.sentCount()).toBe(1);
   });

@@ -18,7 +18,7 @@ describe('PhotoUploadService', () => {
           provide: PRODUCER_CONFIG,
           useValue: {
             analyzeScreenshotEndpoint: 'https://example.com/api/analyze-screenshot',
-            captureIntervalMs: 45_000,
+            captureIntervalMs: 30_000,
           },
         },
       ],

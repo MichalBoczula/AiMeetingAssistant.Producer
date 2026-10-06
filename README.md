@@ -8,7 +8,7 @@ the analysis received through SignalR.
 
 The page has one camera icon and a live preview. Tap the icon to start the rear
 camera, grant permission, and send the first JPEG once a video frame is ready.
-Further capture attempts run every 45 seconds. Tap the same icon to stop.
+Further capture attempts run every 30 seconds. Tap the same icon to stop.
 There is no manual photo or upload button, and opening the page does not access the camera.
 
 Each upload contains `file`, `sessionId`, and a unique `requestId`. The Producer
@@ -50,7 +50,7 @@ Edit `producerConfig` in `src/app/app.config.ts`:
 
 - `analyzeScreenshotEndpoint`: full public Function URL ending in
   `/api/analyze-screenshot`.
-- `captureIntervalMs`: interval between capture attempts, default `45_000`.
+- `captureIntervalMs`: interval between capture attempts, default `30_000`.
 
 The capture panel, upload service, and scheduler use `PRODUCER_CONFIG`.
 This is build-time frontend configuration, not an Azure server-side app setting.
@@ -116,7 +116,7 @@ The existing Client retains its own Function and SignalR CORS origins.
 3. Tap the camera icon, allow camera access, and point the rear camera at the training
    question. Keep all answer choices visible and the text sharp.
 4. Verify a JPEG request reaches the Function immediately, followed by capture
-   attempts every 45 seconds, and the Client receives the response.
+   attempts every 30 seconds, and the Client receives the response.
 5. Change the question, then verify a later answer corresponds to the new frame.
 6. Tap the icon to stop: camera indicator and preview should disappear, with no new uploads.
 7. Repeat with denied permission, a hidden page, a slow request, and a rate-limit response.

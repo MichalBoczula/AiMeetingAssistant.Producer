@@ -5,7 +5,7 @@ import { PRODUCER_CONFIG, ProducerConfig } from './core/config/producer-config';
 export const producerConfig: ProducerConfig = Object.freeze({
   analyzeScreenshotEndpoint:
     'https://func-ai-meeting-assistant-dev-mb-btdeargfegebefhb.polandcentral-01.azurewebsites.net/api/analyze-screenshot',
-  captureIntervalMs: 45_000,
+  captureIntervalMs: 30_000,
 });
 
 export const appConfig: ApplicationConfig = {
